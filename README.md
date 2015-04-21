@@ -4,6 +4,7 @@ hateoas-browser README
 * Latest Release: [![GitHub version](https://badge.fury.io/gh/DracoBlue%2Fhateoas-browser.png)](https://github.com/DracoBlue/hateoas-browser/releases)
 * Build-Status: [![Build Status](https://travis-ci.org/DracoBlue/hateoas-browser.png?branch=master)](https://travis-ci.org/DracoBlue/hateoas-browser)
 * Official Site: <http://dracoblue.net/>
+* Demo: <http://dracoblue.github.io/hateoas-browser/>
 
 hateoas-browser is copyright 2015 by DracoBlue <http://dracoblue.net>
 
@@ -20,6 +21,8 @@ Requirements: (managed with bower)
 * Jsb
 * Logging.js
 * require.js
+
+You can try it on the DEMO page at <http://dracoblue.github.io/hateoas-browser/>
 
 Installation
 ------------
