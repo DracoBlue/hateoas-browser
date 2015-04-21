@@ -1,0 +1,34 @@
+{
+  "name": "hateoas-browser",
+  "version": "0.0.0",
+  "authors": [
+    "DracoBlue <JanS@DracoBlue.de>"
+  ],
+  "description": "Is a browser to explorer RESTful services, which use HATEOAS with hypermedia controls.",
+  "keywords": [
+    "xml",
+    "atom",
+    "hateoas",
+    "json",
+    "hal",
+    "rest",
+    "api"
+  ],
+  "license": "MIT",
+  "homepage": "http://dracoblue.net",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "logging.js": "~1.0.1",
+    "jsb": "~2.0.0",
+    "hateoas-client": "~0.4.0",
+    "jquery": "~2.1.3",
+    "requirejs": "~2.1.17"
+  }
+}
