@@ -1,0 +1,21 @@
+{
+  "name": "logging.js",
+  "authors": [
+    "DracoBlue <JanS@DracoBlue.de>"
+  ],
+  "description": "Easy lib to trace function calls and write log messages into the `console` object.",
+  "main": "logging.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "logging",
+    "console",
+    "tracing"
+  ],
+  "license": "MIT",
+  "homepage": "http://dracoblue.net/",
+  "ignore": [
+    "**/.*"
+  ]
+}

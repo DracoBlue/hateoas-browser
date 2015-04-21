@@ -1,0 +1,34 @@
+{
+  "name": "jsb",
+  "homepage": "https://github.com/DracoBlue/jsb",
+  "authors": [
+    "DracoBlue <JanS@DracoBlue.de>"
+  ],
+  "description": "A very extendable Toolkit to inject Javascript Behaviour into rendered HTML without Inline Javascript.",
+  "main": "jsb.js",
+  "keywords": [
+    "ajax",
+    "data-binding",
+    "domready",
+    "dynamic"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests",
+    "examples"
+  ],
+  "version": "2.0.0",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.0",
+    "commit": "975383c2e800f3dbf79cdaee534c116958d0b68f"
+  },
+  "_source": "git://github.com/DracoBlue/jsb.git",
+  "_target": "~2.0.0",
+  "_originalSource": "jsb",
+  "_direct": true
+}

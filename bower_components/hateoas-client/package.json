@@ -1,0 +1,39 @@
+{
+  "name": "hateoas-client",
+  "description": "A library to communicate with RESTful services. It's aim is to provide a very simple API to follow the links defined in a request response, thus achieving level 3 in Richardson Maturity Model.",
+  "main": "hateoas-client.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DracoBlue/hateoas-client-js.git"
+  },
+  "keywords": [
+    "rest",
+    "hateoas",
+    "api",
+    "json",
+    "hal",
+    "atom",
+    "xml"
+  ],
+  "author": "DracoBlue <JanS@DracoBlue.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DracoBlue/hateoas-client-js/issues"
+  },
+  "homepage": "https://github.com/DracoBlue/hateoas-client-js",
+  "dependencies": {
+    "domino": "^1.0.18",
+    "jquery": "^2.1.3",
+    "xmlhttprequest": "^1.7.0"
+  },
+  "devDependencies": {
+    "express": "^4.12.3",
+    "mocha": "*"
+  }
+}

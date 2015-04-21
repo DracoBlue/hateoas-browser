@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-1.6.4.js"></script>
+        <script src="../hateoas-client.js"></script>
+    </head>
+    <body>
+        Please see your browsers console.log for output!
+    </body>
+    <script>
+        var assertEquals = function(a, b, message) {
+            if(a === b) {
+                console.log('[OK]', a, '===', b);
+            } else {
+                console.error('[  ]', a, '!==', b, message || '');
+            }
+        }
+
+        console.log('Testing functionality ...');
+
+        /*
+         * Walk through the maze
+         */
+        var a = new HttpAgent('maze/1x1.json');
+        a.navigate(["*", "leave"]);
+        a.get(function(response) {
+            assertEquals(response.getValue().message, 'The secret honey pot', 'Cannot find the secret message at the finish');
+        });
+        
+        
+        /*
+         * Walk through the maze, and search for "The secret honey pot as message"
+         */
+        var a = new HttpAgent('maze/1x1.json');
+        a.navigate(["*", {"message": 'The secret honey pot'}]);
+        a.get(function(response) {
+            assertEquals(response.getValue().message, 'The secret honey pot', 'Cannot find the secret message at the finish');
+        });
+
+    </script>
+</html>
