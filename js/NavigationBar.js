@@ -10,6 +10,7 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
         that.domElement.find('select[name=method]').val(this.getQueryParameter('method', this.domElement.find('select[name=method]').val()));
         that.domElement.find('input[name=q]').val(this.getQueryParameter('q', this.domElement.find('input[name=q]').val()));
         that.domElement.find('textarea[name=body]').val(this.getQueryParameter('body', this.domElement.find('textarea[name=body]').val()));
+        that.domElement.find('textarea[name=headers]').val(this.getQueryParameter('headers', this.domElement.find('textarea[name=headers]').val()));
 
         var methodsWithoutBody = ["get", "head", "options", "delete"];
 
@@ -50,10 +51,13 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
 
         if (this.getUrl())
         {
+            that.domElement.find('textarea[name=headers]').val(JSON.stringify(this.parseHeadersStringToObject(that.domElement.find('textarea[name=headers]').val()), null, 2));
+
             jsb.fireEvent('NavigationBar::SUBMIT_REQUEST', {
                 "method": that.domElement.find('select[name=method]').val(),
                 "url": that.domElement.find('input[name=q]').val(),
-                "body": that.domElement.find('textarea[name=body]').val()
+                "body": that.domElement.find('textarea[name=body]').val(),
+                "headers": this.parseHeadersStringToObject(that.domElement.find('textarea[name=headers]').val())
             });
         }
     };
@@ -78,6 +82,24 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
         }
 
         return (defaultValue || '');
+    };
+
+    NavigationBar.prototype.parseHeadersStringToObject = function(headersString)
+    {
+        try {
+            return JSON.parse(headersString);
+        } catch (error) {
+        }
+
+        var headers = {};
+        var extractHeadersRegExp = /^([^:]+):\s+(.+)$/mg;
+        var match;
+
+        while ((match = extractHeadersRegExp.exec(headersString)) !== null) {
+            headers[match[1].trim()] = match[2].trim();
+        }
+
+        return headers;
     }
 
 	return NavigationBar;

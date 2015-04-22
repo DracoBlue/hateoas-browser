@@ -32,7 +32,7 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
                 }
             }
 
-			that.agent = new hateoasClient.HttpAgent(values.url, {}, {
+			that.agent = new hateoasClient.HttpAgent(values.url, values.headers, {
                 ajaxOptions: ajaxOptions
             });
 			that.agent.call(function(response) {

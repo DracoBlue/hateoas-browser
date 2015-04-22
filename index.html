@@ -57,6 +57,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#navigation-bar-main" aria-controls="home" role="tab" data-toggle="tab">Request</a></li>
+                <li role="presentation"><a href="#navigation-bar-headers" aria-controls="profile" role="tab" data-toggle="tab">Headers</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -82,6 +83,12 @@
                     <div class="form-group body-area" style="display: none">
                         <label for="inputRequestBody">Request Body</label>
                         <textarea name="body" id="inputRequestBody" placeholder="" class="form-control" rows="10"></textarea>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="navigation-bar-headers" style="padding: 10px 0;">
+                    <div class="form-group">
+                        <label for="inputRequestHeaders">Request Headers</label>
+                        <textarea name="headers" id="inputRequestHeaders" placeholder="" class="form-control" rows="10"></textarea>
                     </div>
                 </div>
             </div>
