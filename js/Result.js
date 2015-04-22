@@ -50,7 +50,7 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
 						links[rel].forEach(function(rawLink) {
                             console.log(rawLink.getBaseUrl(), 'LINK', rawLink.getUrl());
 							var linkRel = rel;
-							var tr = $('<tr><td class="rel"></td><td class="href"></td><td class="title"></td><td><div class="btn-group-vertical actions" role="group"></div></td></tr>');
+							var tr = $('<tr><td class="rel"></td><td class="href"></td><td class="title"></td><td class="get-actions"></td><td class="post-actions"></td><td><div class="btn-group-vertical other-actions"></div></td></tr>');
 
                             tr.find('.rel').text(that.getRelativeUrlWithDotsPrefix(rawLink.getRel(), rawLink.getBaseUrl()));
                             tr.find('.href').text(that.getRelativeUrlWithDotsPrefix(rawLink.getUrl(), rawLink.getBaseUrl()));
@@ -68,7 +68,7 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
                                     allowedMethods = allowHeader.split(',');
                                 }
                                 allowedMethods.forEach(function(method) {
-                                    var button = $('<button class="btn btn-default btn-xs text-uppercase"></button>');
+                                    var button = $('<button class="btn btn-default text-uppercase"></button>');
                                     if (method == 'delete') {
                                         button.addClass('btn-danger');
                                     }
@@ -86,7 +86,16 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
                                             "url": rawLink.url
                                         });
                                     });
-                                    tr.find('.actions').append(button);
+                                    if (method == 'get') {
+                                        button.addClass('btn-sm');
+                                        tr.find('.get-actions').append(button);
+                                    } else if (method == 'post') {
+                                        button.addClass('btn-sm');
+                                            tr.find('.post-actions').append(button);
+                                    } else {
+                                        button.addClass('btn-xs');
+                                        tr.find('.other-actions').append(button);
+                                    }
                                 });
                                 that.domElement.find('.links-tbody').append(tr);
 							});
