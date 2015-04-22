@@ -47,31 +47,45 @@
     </div>
 </nav>
 
-<div class="container theme-showcase" role="main">
+<div class="container" role="main">
 
     <h2>Request</h2>
 
     <form class="jsb_ jsb_NavigationBar">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <select name="method">
-                    <option value="get">GET</option>
-                    <option value="post">POST</option>
-                    <option value="delete">DELETE</option>
-                    <option value="patch">PATCH</option>
-                    <option value="put">PUT</option>
-                    <option value="head">HEAD</option>
-                    <option value="options">OPTIONS</option>
-                </select>
-            </span>
-            <input name="q" type="text" class="form-control" placeholder="A location, e.g.: http://example.org/api" value="">
-            <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Submit</button>
-          </span>
-        </div>
-        <div class="form-group body-area" style="display: none">
-            <label for="inputRequestBody">Request Body</label>
-            <textarea name="body" id="inputRequestBody" placeholder="" class="form-control" rows="10"></textarea>
+        <div role="tabpanel">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#navigation-bar-main" aria-controls="home" role="tab" data-toggle="tab">Request</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="navigation-bar-main" style="padding: 10px 0;">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <select name="method">
+                                <option value="get">GET</option>
+                                <option value="post">POST</option>
+                                <option value="delete">DELETE</option>
+                                <option value="patch">PATCH</option>
+                                <option value="put">PUT</option>
+                                <option value="head">HEAD</option>
+                                <option value="options">OPTIONS</option>
+                            </select>
+                        </span>
+                        <input name="q" type="text" class="form-control" placeholder="A location, e.g.: http://example.org/api" value="">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Submit</button>
+                      </span>
+                    </div>
+                    <div class="form-group body-area" style="display: none">
+                        <label for="inputRequestBody">Request Body</label>
+                        <textarea name="body" id="inputRequestBody" placeholder="" class="form-control" rows="10"></textarea>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </form>
@@ -79,24 +93,46 @@
     <div class="jsb_ jsb_Result">
         <h2>Result: <span class="status">Not Available</span></h2>
 
+
         <div class="content" style="display: none">
-            <h3>Links</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Rel</th>
-                        <th>Href</th>
-                        <th>Title</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="links-tbody">
-                </tbody>
-            </table>
-            <h2>Value</h2>
-            <pre class="value"></pre>
-            <h2>Response Headers</h2>
-            <pre class="response-headers"></pre>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Links</div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Rel</th>
+                                <th>Href</th>
+                                <th>Title</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody class="links-tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Response Headers</h3>
+                        </div>
+                        <div class="panel-body">
+                            <pre class="response-headers"></pre>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Value</h3>
+                        </div>
+                        <div class="panel-body">
+                            <pre class="value"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
