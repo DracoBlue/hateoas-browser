@@ -32,7 +32,7 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
                 }
             }
 
-			that.agent = new hateoasClient.HttpAgent(values.url, {}, {
+			that.agent = new hateoasClient.HttpAgent(values.url, values.headers, {
                 ajaxOptions: ajaxOptions
             });
 			that.agent.call(function(response) {
@@ -48,11 +48,20 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
 				for (var rel in links) {
 					if (links.hasOwnProperty(rel)) {
 						links[rel].forEach(function(rawLink) {
+                            console.log(rawLink.getBaseUrl(), 'LINK', rawLink.getUrl());
 							var linkRel = rel;
-							var tr = $('<tr><td class="rel"></td><td class="href"></td><td class="title"></td><td><div class="btn-group-vertical actions" role="group"></div></td></tr>');
-							tr.find('.rel').text(rawLink.getRel());
-							tr.find('.href').text(rawLink.getUrl());
+							var tr = $('<tr><td class="rel"></td><td class="title"></td><td class="get-actions"></td><td class="post-actions"></td><td><div class="btn-group-vertical other-actions"></div></td><td class="docs"></td></tr>');
+
+                            tr.find('.rel').text(that.getRelativeUrlWithDotsPrefix(rawLink.getRel(), rawLink.getBaseUrl()));
                             tr.find('.title').text(rawLink.getTitle());
+
+                            if (rawLink.getRel().substr(0, 4) == 'http') {
+                                var docsLink = $('<a class="btn btn-default" href="" />');
+                                docsLink.attr('href', rawLink.getRel());
+                                docsLink.html('<span class="glyphicon glyphicon-book"></span>');
+                                tr.find('.docs').append(docsLink);
+                            }
+
                             jQuery.ajax({
 								url: rawLink.url,
 								crossDomain: true,
@@ -66,7 +75,8 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
                                     allowedMethods = allowHeader.split(',');
                                 }
                                 allowedMethods.forEach(function(method) {
-                                    var button = $('<button class="btn btn-default btn-xs text-uppercase"></button>');
+                                    var button = $('<button class="btn btn-default text-uppercase"></button>');
+                                    button.attr('title', method + ': ' + that.getRelativeUrlWithDotsPrefix(rawLink.getUrl(), rawLink.getBaseUrl()));
                                     if (method == 'delete') {
                                         button.addClass('btn-danger');
                                     }
@@ -84,7 +94,16 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
                                             "url": rawLink.url
                                         });
                                     });
-                                    tr.find('.actions').append(button);
+                                    if (method == 'get') {
+                                        button.addClass('btn-sm');
+                                        tr.find('.get-actions').append(button);
+                                    } else if (method == 'post') {
+                                        button.addClass('btn-sm');
+                                            tr.find('.post-actions').append(button);
+                                    } else {
+                                        button.addClass('btn-xs');
+                                        tr.find('.other-actions').append(button);
+                                    }
                                 });
                                 that.domElement.find('.links-tbody').append(tr);
 							});
@@ -99,6 +118,14 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
 		});
 
 	};
+
+    Result.prototype.getRelativeUrlWithDotsPrefix = function(absoluteUrl, urlBasePath) {
+        if (absoluteUrl.substr(0, urlBasePath.length) == urlBasePath)
+        {
+            return '…' + absoluteUrl.substr(urlBasePath.length);
+        }
+        return absoluteUrl;
+    };
 
 	return Result;
 });
