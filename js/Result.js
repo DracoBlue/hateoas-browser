@@ -50,11 +50,18 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
 						links[rel].forEach(function(rawLink) {
                             console.log(rawLink.getBaseUrl(), 'LINK', rawLink.getUrl());
 							var linkRel = rel;
-							var tr = $('<tr><td class="rel"></td><td class="href"></td><td class="title"></td><td class="get-actions"></td><td class="post-actions"></td><td><div class="btn-group-vertical other-actions"></div></td></tr>');
+							var tr = $('<tr><td class="rel"></td><td class="title"></td><td class="get-actions"></td><td class="post-actions"></td><td><div class="btn-group-vertical other-actions"></div></td><td class="docs"></td></tr>');
 
                             tr.find('.rel').text(that.getRelativeUrlWithDotsPrefix(rawLink.getRel(), rawLink.getBaseUrl()));
-                            tr.find('.href').text(that.getRelativeUrlWithDotsPrefix(rawLink.getUrl(), rawLink.getBaseUrl()));
                             tr.find('.title').text(rawLink.getTitle());
+
+                            if (rawLink.getRel().substr(0, 4) == 'http') {
+                                var docsLink = $('<a class="btn btn-default" href="" />');
+                                docsLink.attr('href', rawLink.getRel());
+                                docsLink.html('<span class="glyphicon glyphicon-book"></span>');
+                                tr.find('.docs').append(docsLink);
+                            }
+
                             jQuery.ajax({
 								url: rawLink.url,
 								crossDomain: true,
@@ -69,6 +76,7 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
                                 }
                                 allowedMethods.forEach(function(method) {
                                     var button = $('<button class="btn btn-default text-uppercase"></button>');
+                                    button.attr('title', method + ': ' + that.getRelativeUrlWithDotsPrefix(rawLink.getUrl(), rawLink.getBaseUrl()));
                                     if (method == 'delete') {
                                         button.addClass('btn-danger');
                                     }
