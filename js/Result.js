@@ -48,10 +48,12 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
 				for (var rel in links) {
 					if (links.hasOwnProperty(rel)) {
 						links[rel].forEach(function(rawLink) {
+                            console.log(rawLink.getBaseUrl(), 'LINK', rawLink.getUrl());
 							var linkRel = rel;
 							var tr = $('<tr><td class="rel"></td><td class="href"></td><td class="title"></td><td><div class="btn-group-vertical actions" role="group"></div></td></tr>');
-							tr.find('.rel').text(rawLink.getRel());
-							tr.find('.href').text(rawLink.getUrl());
+
+                            tr.find('.rel').text(that.getRelativeUrlWithDotsPrefix(rawLink.getRel(), rawLink.getBaseUrl()));
+                            tr.find('.href').text(that.getRelativeUrlWithDotsPrefix(rawLink.getUrl(), rawLink.getBaseUrl()));
                             tr.find('.title').text(rawLink.getTitle());
                             jQuery.ajax({
 								url: rawLink.url,
@@ -99,6 +101,14 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
 		});
 
 	};
+
+    Result.prototype.getRelativeUrlWithDotsPrefix = function(absoluteUrl, urlBasePath) {
+        if (absoluteUrl.substr(0, urlBasePath.length) == urlBasePath)
+        {
+            return '…' + absoluteUrl.substr(urlBasePath.length);
+        }
+        return absoluteUrl;
+    };
 
 	return Result;
 });
