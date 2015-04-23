@@ -8,10 +8,14 @@ define('Result', ['logging', 'jquery', 'jsb', 'hateoas-client-js'], function(log
 
 		logging.applyLogging(this, 'Result');
 
+
 		jsb.whenFired('NavigationBar::SUBMIT_REQUEST', function(values) {
             that.domElement.find('.status').text('Requesting ...');
             that.domElement.find('.content').hide();
 			that.logDebug('Result', values);
+
+            that.domElement.find('.links-tbody').empty();
+
 
             var ajaxOptions = {
                 xhrFields: {

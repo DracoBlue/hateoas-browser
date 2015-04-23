@@ -34,10 +34,20 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
             }
         });
 
+        that.domElement.on('submit', function(event) {
+            if (window.history)
+            {
+                window.history.pushState(null, null, window.document.location.pathname + '?' + that.domElement.serialize());
+                that.submitRequest();
+                event.preventDefault();
+            }
+        });
+
         jsb.whenFired('NavigationBar::TRIGGER_REQUEST', function(values) {
             that.domElement.find('select[name=method]').val(values.method);
             that.domElement.find('input[name=q]').val(values.url);
             that.domElement.find('textarea[name=body]').val('');
+
             if (methodsWithoutBody.indexOf(values.method) != -1) {
                 that.domElement.find('.body-area').hide();
                 that.domElement.submit();
@@ -52,19 +62,25 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
         if (this.getUrl())
         {
             that.domElement.find('textarea[name=headers]').val(JSON.stringify(this.parseHeadersStringToObject(that.domElement.find('textarea[name=headers]').val()), null, 2));
-
-            jsb.fireEvent('NavigationBar::SUBMIT_REQUEST', {
-                "method": that.domElement.find('select[name=method]').val(),
-                "url": that.domElement.find('input[name=q]').val(),
-                "body": that.domElement.find('textarea[name=body]').val(),
-                "headers": this.parseHeadersStringToObject(that.domElement.find('textarea[name=headers]').val())
-            });
+            that.submitRequest();
         }
     };
 
     NavigationBar.prototype.getUrl = function()
     {
         return this.domElement.find('input[name=q]').val();
+    };
+
+    NavigationBar.prototype.submitRequest = function()
+    {
+        var that = this;
+
+        jsb.fireEvent('NavigationBar::SUBMIT_REQUEST', {
+            "method": that.domElement.find('select[name=method]').val(),
+            "url": that.domElement.find('input[name=q]').val(),
+            "body": that.domElement.find('textarea[name=body]').val(),
+            "headers": this.parseHeadersStringToObject(that.domElement.find('textarea[name=headers]').val())
+        });
     };
 
     NavigationBar.prototype.getQueryParameter = function(name, defaultValue)
