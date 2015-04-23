@@ -2,6 +2,7 @@ hateoas-browser CHANGELOG
 =========================
 
 * dev
+  - use pushState api instead of page reload
   - removed href from links panel
   - added docs link
   - clustered action buttons
