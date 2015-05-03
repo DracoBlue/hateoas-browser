@@ -10,7 +10,7 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
         that.writeQueryStringIntoFields();
 
         that.domElement.find('select[name=method]').on('change', function() {
-            if (that.isMethodsWithoutBody(that.domElement.find('select[name=method]').val()))
+            if (that.isMethodWithoutBody(that.domElement.find('select[name=method]').val()))
             {
                 that.domElement.find('.body-area').hide();
             }
