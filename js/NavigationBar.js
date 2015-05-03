@@ -12,11 +12,11 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
         that.domElement.find('select[name=method]').on('change', function() {
             if (that.isMethodsWithoutBody(that.domElement.find('select[name=method]').val()))
             {
-                that.domElement.find('.body-area').show();
+                that.domElement.find('.body-area').hide();
             }
             else
             {
-                that.domElement.find('.body-area').hide();
+                that.domElement.find('.body-area').show();
             }
         });
 
@@ -83,11 +83,11 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
 
         if (this.isMethodWithoutBody(that.domElement.find('select[name=method]').val()))
         {
-            that.domElement.find('.body-area').show();
+            that.domElement.find('.body-area').hide();
         }
         else
         {
-            that.domElement.find('.body-area').hide();
+            that.domElement.find('.body-area').show();
         }
     };
 
