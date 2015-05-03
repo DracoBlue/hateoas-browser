@@ -7,24 +7,10 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
 
 		logging.applyLogging(this, 'NavigationBar');
 
-        that.domElement.find('select[name=method]').val(this.getQueryParameter('method', this.domElement.find('select[name=method]').val()));
-        that.domElement.find('input[name=q]').val(this.getQueryParameter('q', this.domElement.find('input[name=q]').val()));
-        that.domElement.find('textarea[name=body]').val(this.getQueryParameter('body', this.domElement.find('textarea[name=body]').val()));
-        that.domElement.find('textarea[name=headers]').val(this.getQueryParameter('headers', this.domElement.find('textarea[name=headers]').val()));
-
-        var methodsWithoutBody = ["get", "head", "options", "delete"];
-
-        if (methodsWithoutBody.indexOf(that.domElement.find('select[name=method]').val()) == -1)
-        {
-            that.domElement.find('.body-area').show();
-        }
-        else
-        {
-            that.domElement.find('.body-area').hide();
-        }
+        that.writeQueryStringIntoFields();
 
         that.domElement.find('select[name=method]').on('change', function() {
-            if (methodsWithoutBody.indexOf(that.domElement.find('select[name=method]').val()) == -1)
+            if (that.isMethodsWithoutBody(that.domElement.find('select[name=method]').val()))
             {
                 that.domElement.find('.body-area').show();
             }
@@ -43,12 +29,26 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
             }
         });
 
+        window.addEventListener("popstate", function(e) {
+            that.writeQueryStringIntoFields();
+
+            if (that.isMethodWithoutBody(that.domElement.find('select[name=method]').val())) {
+                that.domElement.find('.body-area').hide();
+                that.submitRequest();
+            }
+            else {
+                that.domElement.find('.body-area').show();
+                that.domElement.find('textarea[name=body]').focus();
+                $('html, body').scrollTop(0);
+            }
+        });
+
         jsb.whenFired('NavigationBar::TRIGGER_REQUEST', function(values) {
             that.domElement.find('select[name=method]').val(values.method);
             that.domElement.find('input[name=q]').val(values.url);
             that.domElement.find('textarea[name=body]').val('');
 
-            if (methodsWithoutBody.indexOf(values.method) != -1) {
+            if (that.isMethodWithoutBody(values.method)) {
                 that.domElement.find('.body-area').hide();
                 that.domElement.submit();
             }
@@ -63,6 +63,31 @@ define('NavigationBar', ['logging', 'jquery', 'jsb'], function(logging, $, jsb) 
         {
             that.domElement.find('textarea[name=headers]').val(JSON.stringify(this.parseHeadersStringToObject(that.domElement.find('textarea[name=headers]').val()), null, 2));
             that.submitRequest();
+        }
+    };
+
+    NavigationBar.prototype.isMethodWithoutBody = function(method) {
+        var methodsWithoutBody = ["get", "head", "options", "delete"];
+
+        return methodsWithoutBody.indexOf(method) == -1 ? false : true;
+
+    };
+
+    NavigationBar.prototype.writeQueryStringIntoFields = function() {
+        var that = this;
+        that.domElement.find('select[name=method]').val(this.getQueryParameter('method', this.domElement.find('select[name=method]').val()));
+        that.domElement.find('input[name=q]').val(this.getQueryParameter('q', this.domElement.find('input[name=q]').val()));
+        that.domElement.find('textarea[name=body]').val(this.getQueryParameter('body', this.domElement.find('textarea[name=body]').val()));
+        that.domElement.find('textarea[name=headers]').val(this.getQueryParameter('headers', this.domElement.find('textarea[name=headers]').val()));
+
+
+        if (this.isMethodWithoutBody(that.domElement.find('select[name=method]').val()))
+        {
+            that.domElement.find('.body-area').show();
+        }
+        else
+        {
+            that.domElement.find('.body-area').hide();
         }
     };
 
