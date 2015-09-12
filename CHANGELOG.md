@@ -2,6 +2,7 @@ hateoas-browser CHANGELOG
 =========================
 
 * dev
+  - refresh page if "back" button in browser is pressed
   - use pushState api instead of page reload
   - removed href from links panel
   - added docs link
