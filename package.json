@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Is a browser to explorer RESTful services, which use HATEOAS with hypermedia controls.",
   "main": "index.html",
+  "engines": {
+    "node": "6.11.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
